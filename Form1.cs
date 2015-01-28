@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Drawing;
+using System.Windows.Input;
 
 namespace SerialKiller3000
 {
     public partial class Form1 : Form
     {
-        //public normalControl normalControl = new normalControl();
-        //public soundControl soundControl = new soundControl();
-        //public breathingControl breathingControl = new breathingControl();
-        //public strobeControl strobeControl = new strobeControl();
-        //public tempControl tempControl = new tempControl();
+        public static Form1 form1 = new Form1();
+        PreferencesWindow preferencesWindow = new PreferencesWindow();
 
         public static bool connected = false;
         bool preferencesOpen = false;
         string pong;
 
-        ContextMenu cm = new ContextMenu();
-        MenuItem open = new MenuItem("Open");
-        MenuItem Leds = new MenuItem("Leds");
-        MenuItem exit = new MenuItem("Exit");
+        //borderless form move stuff
+        private bool _dragging = false;
+        private Point _start_point = new Point(0, 0);
 
         public Form1()
         {
@@ -28,19 +26,33 @@ namespace SerialKiller3000
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            enableforms(false);
+
+            tempControl1.TempControl_Load(null, null);
+            soundControl1.SoundControl_Load(null, null);  //preload forms for devices and interfaces to become available
+
+            EnableForms(false);
+            initMinimizeToTrayStuff();
+
             baudBox.Text = "19200";
-            foreach (string portname in SerialPort.GetPortNames())
+
+            stuff.Serial.GetPorts();
+            foreach (var port in stuff.Serial.portlist)
             {
-                portBox.Items.Add(portname);
-                portBox.SelectedIndex = 0;
+                portBox.Items.Add(port);
             }
 
-            initMinimizeToTrayStuff();
+            portBox.SelectedIndex = 0;
+
+            if (Properties.Settings.Default.Preferences_startMinimized) //start minimized or not
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+            }
 
         }
         private void openport_CheckedChanged(object sender, EventArgs e)
         {
+
             if (openport.Checked)
             {
                 portBox.Enabled = false;
@@ -49,22 +61,23 @@ namespace SerialKiller3000
 
                 try
                 {
-                    stuff.Serial.uart.PortName = portBox.Text;
+                    stuff.Serial.uart.PortName = portBox.Text;              //open port and send "ping"
                     stuff.Serial.uart.BaudRate = int.Parse(baudBox.Text);
                     stuff.Serial.uart.Open();
                     stuff.Serial.uart.Write("ping;");
                     pong = stuff.Serial.uart.ReadTo("!");
-                    if (pong == "\n\r>pong")
+
+                    if (pong == "\n\r>pong")                                //if the SK3k responds, great!
                     {
                         MessageBox.Show("Connected to the Serial KILLER 3000!");
-                        enableforms(true);
+                        EnableForms(true);
                         stuff.Serial.RgbledOFF();
                         connected = true;
                     }
-                    else
+                    else                                                    //if not, change button text to retry 
                     {
-                        MessageBox.Show("Is the Serial KILLER 3000 connected in port " + stuff.Serial.uart.PortName + "?");
                         openport.Checked = false;
+                        openport.Text = "Retry";
                     }
                 }
                 catch (Exception ex)
@@ -76,94 +89,285 @@ namespace SerialKiller3000
             else
             {
                 stuff.Serial.uart.Close();
-                enableforms(false);
+                EnableForms(false);
                 portBox.Enabled = true;
                 baudBox.Enabled = true;
-                openport.Text = "Open Port";
+                openport.Text = "Connect";
                 connected = false;
             }
         }
 
-        public void enableforms(bool b)
+        public void EnableForms(bool b)
         {
-            Leds.Enabled = b;
-            //idleToolStripMenuItem1.Enabled = b;
-            //resetToolStripMenuItem1.Enabled = b;
             btnNormal.Enabled = b;
             btnNormalPrefs.Enabled = b;
             btnRainbow.Enabled = b;
             //btnRainbowPrefs.Enabled = b;
             btnBreathing.Enabled = b;
             btnBreathingPrefs.Enabled = b;
+            btnDualBreathing.Enabled = b;
+            btnDualBreathingPrefs.Enabled = b;
             btnSound.Enabled = b;
             btnSoundPrefs.Enabled = b;
             btnStrobe.Enabled = b;
             btnStrobePrefs.Enabled = b;
             btnTemp.Enabled = b;
             btnTempPrefs.Enabled = b;
-            onToolStripMenuItem.Enabled = b;                //normal mode
-            offToolStripMenuItem.Enabled = b;               //normal mode
-            preferencesToolStripMenuItem.Enabled = b;       //normal mode
-            onToolStripMenuItem3.Enabled = b;              //rainbow mode
-            offToolStripMenuItem3.Enabled = b;              //rainbow mode
-            onToolStripMenuItem4.Enabled = b;              //breathing mode
-            offToolStripMenuItem4.Enabled = b;              //breathing mode
-            preferencesToolStripMenuItem3.Enabled = b;      //breathing mode
-            onToolStripMenuItem1.Enabled = b;              //sound mode
-            offToolStripMenuItem1.Enabled = b;             //sound mode
-            preferencesToolStripMenuItem1.Enabled = b;      //sound mode
-            onToolStripMenuItem2.Enabled = b;              //temperature mode
-            offToolStripMenuItem2.Enabled = b;             //temperature mode
-            preferencesToolStripMenuItem2.Enabled = b;      //temperature mode
-            onToolStripMenuItem5.Enabled = b;               //flashing mode
-            offToolStripMenuItem5.Enabled = b;              //flashing mode
-            preferencesToolStripMenuItem4.Enabled = b;      //flashing mode
+        }
+        public void EnableCustomControls(bool b)
+        {
+            normalControl1.Enabled = b;
+            breathingControl1.Enabled = b;
+            strobeControl1.Enabled = b;
+            soundControl1.Enabled = b;
+            tempControl1.Enabled = b;
+        }
+        public void CustomControlsAreVisible(bool b)
+        {
+            normalControl1.Visible = b;
+            breathingControl1.Visible = b;
+            strobeControl1.Visible = b;
+            soundControl1.Visible = b;
+            tempControl1.Visible = b;
         }
 
-        #region minimize to tray stuff  //todo minimize menu stuff
+        #region Mode buttons
 
-        private void initMinimizeToTrayStuff()
+        private void btnNormal_CheckedChanged(object sender, EventArgs e)       //normal
         {
-            open.Click += new System.EventHandler(this.open_Click);
-            //Leds.Click += new System.EventHandler(this.LedsOn_Click);
-            //Leds.Click += new System.EventHandler(this.LedsOff_Click);
 
-            exit.Click += new System.EventHandler(this.exit_Click);
+        }
+        private void btnNormalPrefs_Click(object sender, EventArgs e)           //normal prefs
+        {
+            SlidePanel(normalControl1);
+        }
+
+        private void btnRainbow_CheckedChanged(object sender, EventArgs e)      //rainbow
+        {
+            int r = 255, g = 0, b = 0;
+
+            if (btnRainbow.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.RainbowActive;
+
+                EnableForms(false);
+                EnableCustomControls(false);
+                btnRainbow.Enabled = true;
+                btnRainbowPrefs.Enabled = true;
+
+                stuff.Serial.uart.Write("rgb " + 255 + "," + 0 + "," + 0 + ";");                 //r max 
+
+                while (btnRainbow.Enabled)
+                {
+                    for (g = 0; g < 255 && btnRainbow.Enabled; g++)                       //g to max
+                    {
+                        stuff.Serial.uart.Write("rgb " + r + "," + stuff.Gamma.correction[g] + "," + b + ";");
+                        Application.DoEvents();
+                    }
+                    for (r = 255; r >= 1 && btnRainbow.Enabled; r--)                       //r to 0
+                    {
+                        stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[r] + "," + g + "," + b + ";");
+                        Application.DoEvents();
+                    }
+                    for (b = 0; b < 255 && btnRainbow.Enabled; b++)                       //b to max
+                    {
+                        stuff.Serial.uart.Write("rgb " + r + "," + g + "," + stuff.Gamma.correction[b] + ";");
+                        Application.DoEvents();
+                    }
+                    for (g = 255; g >= 1 && btnRainbow.Enabled; g--)                       //g to 0
+                    {
+                        stuff.Serial.uart.Write("rgb " + r + "," + stuff.Gamma.correction[g] + "," + b + ";");
+                        Application.DoEvents();
+                    }
+                    for (r = 0; r < 255 && btnRainbow.Enabled; r++)                       //r to max
+                    {
+                        stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[r] + "," + g + "," + b + ";");
+                        Application.DoEvents();
+                    }
+                    for (b = 255; b >= 1 && btnRainbow.Enabled; b--)                       //b to 0
+                    {
+                        stuff.Serial.uart.Write("rgb " + r + "," + g + "," + stuff.Gamma.correction[b] + ";");
+                        Application.DoEvents();
+                    }
+                }
+            }
+            else
+            {
+                stuff.Serial.RgbledOFF();
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+                EnableCustomControls(true);
+            }
+
+        }
+        private void btnRainbowPrefs_Click(object sender, EventArgs e)          //rainbow prefs
+        {
+
+        }
+
+        private void btnBreathing_CheckedChanged(object sender, EventArgs e)
+        {
+            if (btnBreathing.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.breathingModeActive;
+
+                EnableForms(false);
+                EnableCustomControls(false);
+                btnBreathing.Enabled = true;
+                btnBreathingPrefs.Enabled = true;
+                breathingControl1.Enabled = true;
+                breathingControl1.BreathingStart(this, null);
+            }
+            else
+            {
+                breathingControl1.BreathingStop();
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+                EnableCustomControls(true);
+            }
+        }   //breathing
+        private void btnBreathingPrefs_Click(object sender, EventArgs e)         //breathing prefs
+        {
+            SlidePanel(breathingControl1);
+        }
+
+        private void btnDualBreathing_CheckedChanged(object sender, EventArgs e)    //dual breathing
+        {
+
+        }
+        private void btnDualBreathingPrefs_Click(object sender, EventArgs e)        //dual breathing prefs
+        {
+            
+        }
+
+        private void btnSound_CheckedChanged(object sender, EventArgs e)            //sound
+        {
+            if (btnSound.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.SoundModeActive;
+
+                EnableForms(false);
+                EnableCustomControls(false);
+                btnSound.Enabled = true;
+                btnSoundPrefs.Enabled = true;
+                soundControl1.Enabled = true;
+                soundControl1.soundModeStart(null, null);
+            }
+            else
+            {
+                soundControl1.soundModeStop(null, null);
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+                EnableCustomControls(true);
+            }
+        }
+        private void btnSoundPrefs_Click(object sender, EventArgs e)                //sound prefs
+        {
+            SlidePanel(soundControl1);
+        }
+
+        private void btnStrobe_CheckedChanged(object sender, EventArgs e)            //strobe
+        {
+
+            if (btnStrobe.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.strobeModeActive;
+
+                EnableForms(false);
+                EnableCustomControls(false);
+                btnStrobe.Enabled = true;
+                btnStrobePrefs.Enabled = true;
+                strobeControl1.Enabled = true;
+                strobeControl1.strobeModeStart(null, null);
+            }
+            else
+            {
+                strobeControl1.strobeModeStop(null, null);
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+                EnableCustomControls(true);
+            }
+
+        }
+        private void btnStrobePrefs_Click(object sender, EventArgs e)               //strobe prefs
+        {
+            SlidePanel(strobeControl1);
+        }
+
+        private void btnTemp_CheckedChanged(object sender, EventArgs e)             //temp
+        {
+            if (btnTemp.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.TempModeActive;
+
+                EnableForms(false);
+                EnableCustomControls(false);
+
+                btnTemp.Enabled = true;
+                btnTempPrefs.Enabled = true;
+                tempControl1.Enabled = true;
+
+
+                tempControl1.TempModeInit();
+            }
+            else
+            {
+                tempControl1.TempModeStop();
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+                EnableCustomControls(true);
+            }
+        }
+        private void btnTempPrefs_Click(object sender, EventArgs e)                 //temp prefs
+        {
+            SlidePanel(tempControl1);
+        }
+
+        #endregion
+
+        #region minimize to tray
+
+        void initMinimizeToTrayStuff()
+        {
+            MenuItem open = new MenuItem("Open");
+            MenuItem Leds = new MenuItem("Leds");
+            MenuItem exit = new MenuItem("Exit");
+            ContextMenu cm = new ContextMenu();
+
+            Leds.MenuItems.Add(new MenuItem("On"));
+            Leds.MenuItems.Add(new MenuItem("Off"));
 
             cm.MenuItems.Add(open);
             cm.MenuItems.Add(Leds);
             cm.MenuItems.Add(exit);
 
-            Leds.MenuItems.Add(new MenuItem("On"));
-            Leds.MenuItems.Add(new MenuItem("Off"));
-
-
-
+            open.Click += new System.EventHandler(this.open_Click);
+            Leds.Click += new System.EventHandler(this.LedsOn_Click);
+            Leds.Click += new System.EventHandler(this.LedsOff_Click);
+            exit.Click += new System.EventHandler(this.exit_Click);
 
             taskbarIcon.Visible = false;
             taskbarIcon.ContextMenu = cm;
         }
+
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
                 this.Hide();
                 taskbarIcon.Visible = true;
-                //taskbarIcon.BalloonTipText = "sup";
-                //taskbarIcon.ShowBalloonTip(500);
             }
             else if (FormWindowState.Normal == this.WindowState)
             {
                 taskbarIcon.Visible = false;
             }
         }
-        private void taskbarIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            taskbarIcon.Visible = false;
-        }
+
         private void open_Click(object sender, EventArgs e)
         {
             this.Show();
@@ -184,180 +388,91 @@ namespace SerialKiller3000
 
         #endregion
 
-        private void idleToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            stuff.Serial.RgbledOFF();
-        }              //cmd off
-        private void resetToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            stuff.Serial.RgbledRST();
-        }             //cmd rst
-        private void commandListToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("\n\r>Hello and welcome to the Serial KILLER 3000 help menu!\n\n\r" +
-            "\n\r>Available commands:" +
-            "\n\r>off;\t\tIdle mode, all outputs go LOW, PWM to 0% duty cycle." +
-            "\n\r>rst;\t\tSoft reset." +
-            "\n\r>ping;\t\tThe Serial KILLER 3000 replies accordingly." +
-            "\n\r>rgb r,g,b;\tRGB mode, acceptable values 0 - 255. \n\r\t\tMax load per chan: 3.5A(cont)/15A(pulsed)." +
-            "\n\r>bit x,y;\t\tPort 1 GPIO control. x = pin number(0 - 7) y = pin state(0 - 1)\n\r\t\t[only bits 0 and 6 available on the Launchpad]." +
-            "\n\r>sta;\t\tReturns Port 1 and Port 2 GPIO status (GUI only)." +
-            "\n\r>man;/help ;\tPrints this screen.\n\n\r");
-        }        //cmd list
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("2bling4u");
-        }              //about
-        private void changelogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "\r•08/2014: beta3 - Semi-implemented sound mode (CoreAudio). Some UI changes." +
-                "\r•05/2014: beta2 - Minor UI and stability improvements." +
-                "\r•04/2014: beta1 - Main functionality achieved." +
-                "\r•03/2014: Rewrote the entire core code for the uC, it now tokenizes and parses strings." +
-                "\r•Early 2014: Rewrote in C#" +
-                "\r•Even later: Minor improvements" +
-                "\r•A bit later: It's alive!" +
-                "\r•Winter 2013: Started the project in VB.net");
-        }          //changelog 
-        private void onToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            normalControl.normalMode = true;
-            btnNormalPrefs.Enabled = true;
-        }                 //normal on       MENU STRIP
-        private void offToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            normalControl.normalMode = false;
-        }                //normal off       MENU STRIP
-        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            normalControl.ShowDialog();
-        }        //normal prefs       MENU STRIP
-        private void onToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            enableforms(false);
-            offToolStripMenuItem3.Enabled = true;
-            btnRainbow.Enabled = true;
-            btnRainbow.Checked = true;
-            //btnRainbowPrefs.Enabled = true;
+        #region X button
 
-            int r = 255, g = 0, b = 0;
+        private void buttonClose_MouseEnter(object sender, EventArgs e)
+        {
+            buttonClose.BackgroundImage = SerialKiller3000.Properties.Resources.xMouse;
+        }
+        private void buttonClose_MouseLeave(object sender, EventArgs e)
+        {
+            buttonClose.BackgroundImage = SerialKiller3000.Properties.Resources.x;
+        }
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
-            stuff.Serial.uart.Write("rgb " + 255 + "," + 0 + "," + 0 + ";");                 //r max 
+        #endregion
 
-            while (!onToolStripMenuItem3.Enabled)
+        #region Minimize button
+
+        private void buttonMinimize_MouseEnter(object sender, EventArgs e)
+        {
+            buttonMinimize.BackgroundImage = SerialKiller3000.Properties.Resources._Mouse;
+        }
+        private void buttonMinimize_MouseLeave(object sender, EventArgs e)
+        {
+            buttonMinimize.BackgroundImage = SerialKiller3000.Properties.Resources._;
+        }
+        private void buttonMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        #endregion
+
+        #region Borderless window move
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            _dragging = true;  // _dragging is your variable flag
+            _start_point = new Point(e.X, e.Y);
+        }
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            _dragging = false;
+        }
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_dragging)
             {
-                for (g = 0; g < 255 && !onToolStripMenuItem3.Enabled; g++)                       //g to max
-                {
-                    stuff.Serial.uart.Write("rgb " + r + "," + stuff.Gamma.correction[g] + "," + b + ";");
-                    Application.DoEvents();
-                }
-                for (r = 255; r >= 1 && !onToolStripMenuItem3.Enabled; r--)                       //r to 0
-                {
-                    stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[r] + "," + g + "," + b + ";");
-                    Application.DoEvents();
-                }
-                for (b = 0; b < 255 && !onToolStripMenuItem3.Enabled; b++)                       //b to max
-                {
-                    stuff.Serial.uart.Write("rgb " + r + "," + g + "," + stuff.Gamma.correction[b] + ";");
-                    Application.DoEvents();
-                }
-                for (g = 255; g >= 1 && !onToolStripMenuItem3.Enabled; g--)                       //g to 0
-                {
-                    stuff.Serial.uart.Write("rgb " + r + "," + stuff.Gamma.correction[g] + "," + b + ";");
-                    Application.DoEvents();
-                }
-                for (r = 0; r < 255 && !onToolStripMenuItem3.Enabled; r++)                       //r to max
-                {
-                    stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[r] + "," + g + "," + b + ";");
-                    Application.DoEvents();
-                }
-                for (b = 255; b >= 1 && !onToolStripMenuItem3.Enabled; b--)                       //b to 0
-                {
-                    stuff.Serial.uart.Write("rgb " + r + "," + g + "," + stuff.Gamma.correction[b] + ";");
-                    Application.DoEvents();
-                }
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - this._start_point.X, p.Y - this._start_point.Y);
             }
-        }                //rainbow on       MENU STRIP
-        private void offToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            stuff.Serial.RgbledOFF();
-            enableforms(true);
-            btnRainbow.Checked = false;
-        }               //rainbow off       MENU STRIP
-        private void onToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            breathingControl.breathingModeStart(this, null);
+        }
 
-            enableforms(false);
-            offToolStripMenuItem4.Enabled = true;
-            preferencesToolStripMenuItem3.Enabled = true;
-            btnBreathing.Enabled = true;
-            btnBreathing.Checked = true;
-            btnBreathingPrefs.Enabled = true;
-        }                //breath on       MENU STRIP
-        private void offToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            breathingControl.breathingModeStop(this, null);
-            enableforms(true);
-            btnBreathing.Checked = false;
-        }               //breath off       MENU STRIP
-        private void preferencesToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            breathingControl.ShowDialog();
-        }       //breath prefs       MENU STRIP
-        private void onToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            soundControl.soundMode = true;
-            soundControl.radioRed.Select();
-            soundControl.soundModeStart(this, null);
+        #endregion
 
-            enableforms(false);
-            offToolStripMenuItem1.Enabled = true;
-            preferencesToolStripMenuItem1.Enabled = true;
-            btnSound.Enabled = true;
-            btnSound.Checked = true;
-            btnSoundPrefs.Enabled = true;
-        }                //sound on       MENU STRIP
-        private void offToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void SlidePanel(Control userControl)
         {
-            soundControl.soundMode = false;
-            soundControl.soundModeStop(this, null);
+            if (!preferencesOpen)
+            {
+                this.Width += 265;
+                this.CenterToScreen();
+                preferencesOpen = true;
 
-            enableforms(true);
-            btnSound.Checked = false;
-        }               //sound off       MENU STRIP
-        private void preferencesToolStripMenuItem1_Click(object sender, EventArgs e)
+                userControl.Visible = true;
+            }
+            else if (preferencesOpen && !userControl.Visible)
+            {
+                CustomControlsAreVisible(false);
+                userControl.Visible = true;
+            }
+            else
+            {
+                this.Width -= 265;
+                this.CenterToScreen();
+                preferencesOpen = false;
+
+                CustomControlsAreVisible(false);
+            }
+        }
+
+        private void btnPreferences_Click(object sender, EventArgs e)
         {
-            soundControl.ShowDialog();
-        }       //sound prefs       MENU STRIP
-        private void onToolStripMenuItem5_Click(object sender, EventArgs e)
-        {
-            strobeControl.strobeMode = true;
-            strobeControl.r = 255;
-            strobeControl.strobeModeStart(this, null);
-
-            enableforms(false);
-            offToolStripMenuItem5.Enabled = true;
-            preferencesToolStripMenuItem4.Enabled = true;
-            btnStrobe.Enabled = true;
-            btnStrobe.Checked = true;
-            btnStrobePrefs.Enabled = true;
-        }                //strobe on       MENU STRIP
-        private void offToolStripMenuItem5_Click(object sender, EventArgs e)
-        {
-            strobeControl.strobeMode = false;
-            strobeControl.strobeModeStop(this, null);
-
-            enableforms(true);
-            btnStrobe.Checked = false;
-        }               //strobe off       MENU STRIP
-        private void preferencesToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            strobeControl.ShowDialog();
-        }       //strobe prefs       MENU STRIP
-
-
+            preferencesWindow.ShowDialog();
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -368,106 +483,20 @@ namespace SerialKiller3000
             }
         }
 
-        private void btnNormal_CheckedChanged(object sender, EventArgs e)                       //normal BUTTON
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
-            if (btnNormal.Checked)
-            {
-                onToolStripMenuItem_Click(this, null);
-            }
-            else
-            {
-                offToolStripMenuItem_Click(this, null);
-            }
+            pictureBox1.Image = SerialKiller3000.Properties.Resources.logoMouse;
         }
-        private void btnNormalPrefs_Click(object sender, EventArgs e)                           //normal prefs BUTTON
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
-            PreferencesPanelSwitch();
-            normalControl.ShowDialog();
+            pictureBox1.Image = SerialKiller3000.Properties.Resources.logo;
         }
-        private void btnRainbow_CheckedChanged(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (btnRainbow.Checked)
-            {
-                onToolStripMenuItem3_Click(this, null);
-            }
-            else
-            {
-                offToolStripMenuItem3_Click(this, null);
-            }
-        }                   //rainbow BUTTON
-        private void btnBreathing_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnBreathing.Checked)
-            {
-                onToolStripMenuItem4_Click(this, null);
-            }
-            else
-            {
-                offToolStripMenuItem4_Click(this, null);
-            }
-        }                   //breathing BUTTON
-        private void btnBreathingPrefs_Click(object sender, EventArgs e)
-        {
-            PreferencesPanelSwitch();
-            breathingControl.ShowDialog();
-        }                   //breathing prefs BUTTON
-        private void btnSound_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnSound.Checked)
-            {
-                onToolStripMenuItem1_Click(this, null);
-            }
-            else
-            {
-                offToolStripMenuItem1_Click(this, null);
-            }
-        }                   //sound BUTTON
-        private void btnSoundPrefs_Click(object sender, EventArgs e)
-        {
-            PreferencesPanelSwitch();
-            soundControl.ShowDialog();
-        }                   //sound prefs  BUTTON
-        private void btnTemp_CheckedChanged(object sender, EventArgs e)
-        {
+            System.Diagnostics.Process.Start("https://github.com/espilioto/SerialKiller3000");
+        }
 
-        }                     //temp  BUTTON
-        private void btnTempPrefs_Click(object sender, EventArgs e)
-        {
-            PreferencesPanelSwitch();
-            tempControl.ShowDialog();
-        }                           //temp prefs  BUTTON
-        private void btnStrobe_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnStrobe.Checked)
-            {
-                onToolStripMenuItem5_Click(this, null);
-            }
-            else
-            {
-                offToolStripMenuItem5_Click(this, null);
-            }
-        }                    //strobe  BUTTON
-        private void btnStrobePrefs_Click(object sender, EventArgs e)
-        {
-            PreferencesPanelSwitch();
-            strobeControl.ShowDialog();
-        }               //strobe prefs  BUTTON
 
-        private void PreferencesPanelSwitch()
-        {
-            if (preferencesOpen == false)
-            {
-                this.Width += 265;
-                this.CenterToScreen();
-                preferencesOpen = true;
-            }
-            else
-            {
-                this.Width -= 265;
-                this.CenterToScreen();
-                preferencesOpen = false;
-            }
-        }                      
 
     }
 }

@@ -2,18 +2,31 @@
 using System.IO.Ports;
 using OpenHardwareMonitor.Hardware;
 using CoreAudioApi;
+using System.Management;
 
 namespace SerialKiller3000
 {
     public class stuff
     {
 
+        public static int Mode = 0;
+        public enum ModeStatus
+        {
+            off = 0,
+            normalMode = 1,
+            breathingModeActive = 2,
+            strobeModeActive = 3,
+            SoundModeActive = 4,
+            TempModeActive = 5,
+            RainbowActive = 6
+        };
+
         public class CoreAudio
         {
             public static MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
             public static MMDevice device;
             public static MMDeviceCollection devs;
-                    
+
             public static void FindDevices()
             {
                 devs = DevEnum.EnumerateAudioEndPoints(EDataFlow.eAll, EDeviceState.DEVICE_STATE_ACTIVE);
@@ -24,6 +37,7 @@ namespace SerialKiller3000
         {
             public static string[] devices;
             public static Computer computer = new Computer() { CPUEnabled = true, GPUEnabled = true };
+            public static int cores = 0;
 
             public static void FindDevices()
             {
@@ -32,12 +46,16 @@ namespace SerialKiller3000
 
                 int i = 0;
                 foreach (var hardware in computer.Hardware)
-                { 
-                    devices.SetValue(hardware.Name,i);
+                {
+                    devices.SetValue(hardware.Name, i);
                     i++;
                 }
+            }
 
-
+            public static void countcores()
+            {
+                foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_Processor").Get())
+                    cores = int.Parse(item["NumberOfCores"].ToString());
             }
 
         }
@@ -64,30 +82,26 @@ namespace SerialKiller3000
         public class Serial
         {
             public static SerialPort uart = new SerialPort(); //commands:     ping ;  off ;   rgb r,g,b;  out,bit,0/1;    sta,;   man ;/help ;    
+            public static System.Collections.ArrayList portlist = new System.Collections.ArrayList();
+
+            public static void GetPorts()
+            {
+                foreach (var port in SerialPort.GetPortNames())
+                {
+                    portlist.Add(port);
+                }
+            }
 
             public static void RgbledOFF()
             {
                 uart.Write("off;");
             }
 
-            public static void RgbledRST() 
+            public static void RgbledRST()
             {
                 uart.Write("rst;");
             }
         }
-        public class PreferencesPanel
-    {
-        static Form1 form1 = new Form1();
-        
-        public static void OpenPanel()
-        {
-            form1.Width += 265;
-        }
-        public static void ClosePanel()
-        {
-            form1.Width -= 265;
-        }
-    }
 
     }
 }

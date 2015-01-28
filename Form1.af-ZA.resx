@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="openport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="openport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 371</value>
+  </data>
+  <data name="portBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 374</value>
+  </data>
+  <data name="baudBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>106, 374</value>
+  </data>
+  <data name="btnNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRainbow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRainbow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 79</value>
+  </data>
+  <data name="btnBreathing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnSound.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnStrobe.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnStrobe.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 183</value>
+  </data>
+  <data name="btnTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 235</value>
+  </data>
+  <data name="checkBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 287</value>
+  </data>
+  <data name="btnDualBreathing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnDualBreathing.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 131</value>
+  </data>
+  <data name="checkBox4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>-264, 2</value>
+  </data>
+  <data name="taskbarIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAMMOAADDDgAAAAAAAAAA
+        AAD///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8BAAAABQAAAAsAAAAH////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8BACQkByIvVoUjMlrLJTVe2x0qTb8FBQ8x////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wEoN2aJa5Gz/5fN5f+FxOf/Tnmo/xsmRIP///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8BAAAAAwAACRsICBE5AAAAFf//
+        /wH///8B////Af///wH///8B////Af///wH///8BIjNVD0Jah/PG8vr/uef1/4XC6P85XpT/FRw1R///
+        /wEAAAADHidIVR8qTZsXHzmBAAAAJ////wH///8B////Af///wH///8B////AQAAVQMmMlydNEZ19T9X
+        h/0dJUa/AAAADf///wH///8B////Af///wH///8B////Af///wEtNmdPcpS0/9b6/f/C6/f/fLvm/ylA
+        dPUAAAAdAAAABycwW4kfT4v/D2Op/xlXmP8lMl3nDA8eVf///wH///8B////Af///wH///8BLDdjFzBG
+        ef9gm8X/e7/l/zVGc/MAAAAf////Af///wH///8B////AQAAAAMQFSUvHyVHeSgxXcmTu9H/yvH5/6DT
+        7v9jp9//JjRk7RIVK1MpM2DLHVGO/wRyvv8CdMP/AHbG/xdZm/8kLFOnAAAAA////wH///8B////Af//
+        /wEwMGEVMUZ4/1+bxv95u+L/MDxr+RsgP6UECBA9AAAABf///wEcHDgtJy5atS9NgvtFeqz/XZrF/63g
+        8P+Hwej/SpbZ/yl+0P9OeKP/K0N4/RJgo/8Ibbf/BHK+/wJ0w/8RYaf/KzNhtx4eSxH///8B////Af//
+        /wH///8B////AVVVVQMvP3HxWpTB/3a54f9xtd//QnWs/yo7bPUWGjGRIidObytCePVDicH/bb7n/4TN
+        7P+U1/D/pt3y/ziK1P8JaMj/AmLH/27N8f9pxej/F3O1/whtt/8Ecr7/Bm67/yo2aN8NDSgT////Af//
+        /wH///8B////Af///wH///8B////AS84a8dIgrP/a7DY/4DH6P+GzO3/VqTX/y9LhP0tUoz/Vqja/4DK
+        6v+P1O//k9fw/5jZ8f+Exuj/EW/K/wBhx/8AYMb/Tq7k/2jH7v9Us+D/CG22/wRyvv8eT4z/HiRGW///
+        /wH///8B////Af///wH///8B////Af///wH///8BMDVnjzRyr/9lsdn/g8vo/47S8f+L0O7/YKzW/1+w
+        3P+J0Ov/k9fw/5TY8f+T1/D/jdLs/2Ow3/8Obcn/AGHH/wBhx/8niNX/VLbn/1y96v8We7//CWu0/ykw
+        XM8AAAAH////Af///wH///8B////Af///wH///8B////Af///wEwM2WPLHW7/2Sz3v+Gzur/k9Xz/5TW
+        9v+P1O//jNPs/5XY8/+W2PX/ldjz/5PX8P+Gzen/WKnc/w1syf8AYcb/AGDF/wNixP82mdr/Sa3k/yCF
+        yP8cT47/IiVJvwcHD0EAAAAJ////Af///wH///8B////Af///wH///8B////ATIyY5csd8H/aLTm/4rP
+        8f+X2Pj/mdn7/5nZ+v+X2Pf/mdn5/5jY+f+O0fT/eMHq/12s3/84j9T/BWbH/wdeuP8zjdL/Xbvu/3bW
+        /P983P//edn9/23C6f9Wjrr/N0d2+R0fQLMFBQoz////Af///wH///8B////Af///wH///8BMjRlgytv
+        uv9psur/jtD4/5jZ+/+a2v3/m9r+/5va/f+Z2Pz/hcn0/1el4/8ngNL/D27K/wdkxP8wgsX/edX1/4vn
+        //+P6v//kev//5Hr//+R6///kOr//4zo//+E4fz/XJW9/ysxW+kODhxbAAAAA////wH///8B////Af//
+        /wExMWNXLF2j/3Sy5/+n1vf/rN/9/53a/v+c2v7/nNr+/5PT+v9ps+v/NozZ/xJwzf8CYMT/VaXU/5Dq
+        //+T7P//k+3//5Tt//+U7f//lO3//5Tt//+U7f//lO3//5Ps//+R6///e8bg/zQ8aPMNDRtd////Af//
+        /wH///8B////ASosVls+Ypf/davh/8rh9f/h8v3/yOr//8Dn//+14///pNv9/4XE8v9VouP/IX7V/1Ct
+        5P+U7f//lO3//5Pt//+T7P//k+z//5Ls//+S7P//kuz//5Ps//+T7P//k+z//5Tt//+T7P//gcvh/y0y
+        W+kFBQoz////Af///wElJUsbPUt572C55/8xidT/qs3s/+71+//3+/7/9fr+//D5/v/l9P7/wuL4/3y6
+        7P9Np+b/kev9/4zo/v+H5P7/huT//4jl//+J5f//heD+/6Wf9v+J0fz/iOX//4fl//+F4///hOL+/4nl
+        /f+P6f3/aZy7/x0ePa0AAAAF////AS8tXpFeocr/IIDS/yY/fv8/aJ3/kMLl/9Dm9f/g7/j/6PL6/+72
+        +//X6vj/i8Lu/2G86v9fwvX/WsH8/1rD/v9mzP7/ctX//3jZ//+EjOv/4mrf/59Z3/952v//c9b//2jN
+        //9bxP7/WMD8/1zB9v9kwuv/LjVh7wAAACH///8BPEd25U2r5P8fVZ//KChQizIyY18yOm7ZRGSX/1yG
+        tv9rm8f/cqPO/2+hzf9OiL//TKnb/1e06/9ivfP/bMf4/2rM/P9bt+P/as/+/2nP//9iwvz/Z8z+/2rP
+        /v9cuOT/as38/2/K+P9mwPT/W7bt/0+u4/83ToD9AAAALf///wFGXIj7V7bp/zRDd/0JCRVT////AVVV
+        VQMwMGEvMi9kZTIwY4MxL2KRMS9hizIvYtFSos//a7nj/3zE6v+I0PH/kOL6/zBDSP+R6/3/ken9/5Dp
+        /f+Q6P3/kOj9/0Rla/9+xtj/itTz/4DH7P9xvOT/W7Hd/zVGdfkAAAAj////ATlAcNl/2PP/QYjB/ygp
+        Ut8AAAAj////Af///wH///8B////Af///wH///8BMTFkd0uItv9vveX/f8fs/4bM7/+I0PL/YX+N/4fQ
+        8f+Gz/D/hs/w/4bP8P+GzvD/ao6f/4DC4f+HzvD/gsnt/3XA5/9ZrNf/LC5a2wAAAAv///8BMTFjYV2F
+        qP9Ytuf/LFmX/xoaM4////8B////Af///wH///8B////Af///wEuLmQhOlaH+2m74/9/yOz/hMvu/37H
+        6/90wej/a7rj/2i44v9puOL/abji/2q54v9yv+f/fMXq/4TL7v+Bye3/cb/l/0d7qv8lJUyJ////Af//
+        /wH///8BMDBjl1+exf8shMv/KChQ3QAAABH///8B////Af///wH///8B////Af///wExMWOZT5C9/3TC
+        6P+Ey+7/ecTp/2K13/9Rq9j/TqnX/06p1/9Oqdf/T6rX/16z3f91wef/hMru/3rF6v9drtj/MThn6RQU
+        Hhn///8B////Af///wEtLWkRSF2J9USl4v8oOnH5AAAFL////wH///8B////Af///wH///8B////ATEx
+        Yyk7X5P/S6Xc/3rF6/+U0fD/l8/r/4fF5P98v+D/dbzf/3O73v97v+H/kczp/5fS7/+Bye3/X7Pi/z54
+        t/8kJEmZ////Af///wH///8B////Af///wE4PW7LXbrp/ydGhv8ODhlH////Af///wH///8B////Af//
+        /wH///8B////ATxFdeE5gt7/aqPp/4LH6v/A5PX/7Pb7//T5/P/y+Pv/8vj7//D4/P/M6ff/kM/t/26v
+        6P9eiev/O1+V/xsbN1P///8B////Af///wH///8B////ATpEcdliv+z/KEiI/w4OIEf///8B////Af//
+        /wH///8B////Af///wH///8BMDBik0iDx/+Lk/f/eIj3/3Ol6P+dxuD/v+L0/8bn+P/C5Pb/qc/n/3e4
+        2/9lge3/i436/16R4/82PmrtAAAAFf///wH///8B////Af///wErK1cjTGmV/Va06P8pP3v9BQULLf//
+        /wH///8B////Af///wH///8B////Af///wEyMmU3RWaY/2mE2v9sdeX/T3eu/y4tXc81NmjDNz1v0zY5
+        bMswMGKzQF6O/WCX1f9ccsb/ToK3/yYmTp////8B////Af///wH///8B////AS8vYJdansr/NpPX/ykv
+        XuMAAAAN////Af///wH///8B////Af///wH///8B////Af///wE0NWe5Xo28/16Juf8xNmXTGhooE///
+        /wH///8B////Af///wExMWSHV32o/33A5P8/Snn1GBgxKf///wH///8B////Af///wH///8BMjNmsSp9
+        x/8kU5n/KCZOhf///wH///8B////Af///wH///8B////Af///wH///8B////ATIyZRkyMmanMTBhnx4e
+        Rxn///8B////Af///wH///8B////AVVVVQMvL2R1MjJkuSgoVEv///8B////Af///wH///8B////Af//
+        /wEvL2QrMTFkry8vXoEcHBwJ////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+</value>
+  </data>
+  <data name="buttonMinimize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonMinimize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 6</value>
+  </data>
+  <data name="buttonClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 6</value>
+  </data>
+  <data name="btnPreferences.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnPreferences.Location" type="System.Drawing.Point, System.Drawing">
+    <value>249, 372</value>
+  </data>
+  <data name="button4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnDualBreathingPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnDualBreathingPrefs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>244, 131</value>
+  </data>
+  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>244, 287</value>
+  </data>
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTempPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTempPrefs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>244, 235</value>
+  </data>
+  <data name="btnStrobePrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnStrobePrefs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>244, 183</value>
+  </data>
+  <data name="btnSoundPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnBreathingPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRainbowPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRainbowPrefs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>244, 79</value>
+  </data>
+  <data name="btnNormalPrefs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>285, 402</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Serial Killer 3000</value>
+  </data>
+</root>
