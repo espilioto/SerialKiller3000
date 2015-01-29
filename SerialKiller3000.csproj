@@ -49,11 +49,11 @@
   <ItemGroup>
     <Reference Include="CoreAudioApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\CoreAudioApi.dll</HintPath>
+      <HintPath>Resources\CoreAudioApi.dll</HintPath>
     </Reference>
     <Reference Include="OpenHardwareMonitorLib, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\OpenHardwareMonitorLib.dll</HintPath>
+      <HintPath>Resources\OpenHardwareMonitorLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -119,9 +119,6 @@
       <DependentUpon>TempControl.cs</DependentUpon>
     </Compile>
     <Compile Include="stuff.cs" />
-    <EmbeddedResource Include="Form1.af-ZA.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
