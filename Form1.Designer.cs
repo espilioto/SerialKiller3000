@@ -43,13 +43,8 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.btnDualBreathing = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.taskbarIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.tempControl1 = new SerialKiller3000.TempControl();
-            this.strobeControl1 = new SerialKiller3000.StrobeControl();
-            this.soundControl1 = new SerialKiller3000.SoundControl();
-            this.normalControl1 = new SerialKiller3000.NormalControl();
-            this.breathingControl1 = new SerialKiller3000.BreathingControl();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonMinimize = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.btnPreferences = new System.Windows.Forms.Button();
@@ -63,7 +58,11 @@
             this.btnBreathingPrefs = new System.Windows.Forms.Button();
             this.btnRainbowPrefs = new System.Windows.Forms.Button();
             this.btnNormalPrefs = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.normalControl1 = new SerialKiller3000.NormalControl();
+            this.breathingControl1 = new SerialKiller3000.BreathingControl();
+            this.tempControl1 = new SerialKiller3000.TempControl();
+            this.strobeControl1 = new SerialKiller3000.StrobeControl();
+            this.soundControl1 = new SerialKiller3000.SoundControl();
             ((System.ComponentModel.ISupportInitialize)(this.baudBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -163,49 +162,20 @@
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Name = "label1";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
-            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
-            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
-            // 
             // taskbarIcon
             // 
             resources.ApplyResources(this.taskbarIcon, "taskbarIcon");
             this.taskbarIcon.DoubleClick += new System.EventHandler(this.open_Click);
             // 
-            // tempControl1
+            // pictureBox1
             // 
-            this.tempControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            resources.ApplyResources(this.tempControl1, "tempControl1");
-            this.tempControl1.Name = "tempControl1";
-            // 
-            // strobeControl1
-            // 
-            this.strobeControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            resources.ApplyResources(this.strobeControl1, "strobeControl1");
-            this.strobeControl1.Name = "strobeControl1";
-            // 
-            // soundControl1
-            // 
-            this.soundControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            resources.ApplyResources(this.soundControl1, "soundControl1");
-            this.soundControl1.Name = "soundControl1";
-            // 
-            // normalControl1
-            // 
-            this.normalControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            resources.ApplyResources(this.normalControl1, "normalControl1");
-            this.normalControl1.Name = "normalControl1";
-            // 
-            // breathingControl1
-            // 
-            this.breathingControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            resources.ApplyResources(this.breathingControl1, "breathingControl1");
-            this.breathingControl1.Name = "breathingControl1";
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
             // buttonMinimize
             // 
@@ -323,15 +293,35 @@
             this.btnNormalPrefs.UseVisualStyleBackColor = true;
             this.btnNormalPrefs.Click += new System.EventHandler(this.btnNormalPrefs_Click);
             // 
-            // pictureBox1
+            // normalControl1
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
-            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.normalControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            resources.ApplyResources(this.normalControl1, "normalControl1");
+            this.normalControl1.Name = "normalControl1";
+            // 
+            // breathingControl1
+            // 
+            this.breathingControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            resources.ApplyResources(this.breathingControl1, "breathingControl1");
+            this.breathingControl1.Name = "breathingControl1";
+            // 
+            // tempControl1
+            // 
+            this.tempControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            resources.ApplyResources(this.tempControl1, "tempControl1");
+            this.tempControl1.Name = "tempControl1";
+            // 
+            // strobeControl1
+            // 
+            this.strobeControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            resources.ApplyResources(this.strobeControl1, "strobeControl1");
+            this.strobeControl1.Name = "strobeControl1";
+            // 
+            // soundControl1
+            // 
+            this.soundControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            resources.ApplyResources(this.soundControl1, "soundControl1");
+            this.soundControl1.Name = "soundControl1";
             // 
             // Form1
             // 
@@ -340,7 +330,6 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonMinimize);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.btnPreferences);
@@ -414,7 +403,6 @@
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button buttonMinimize;
         private BreathingControl breathingControl1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NotifyIcon taskbarIcon;
         private NormalControl normalControl1;
         private StrobeControl strobeControl1;
