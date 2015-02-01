@@ -14,7 +14,7 @@ namespace SerialKiller3000
     {
 
         public static bool normalMode = false;
-        int r = 0, g = 0, b = 0;
+        public int r = 0, g = 0, b = 0;
 
         public NormalControl()
         {
@@ -24,7 +24,11 @@ namespace SerialKiller3000
         private void NormalControl_Load(object sender, EventArgs e)
         {
             colorDialog1.FullOpen = true;
+
+            UpdateUIValues();
         }
+
+        #region bars and updowns
 
         private void redbar_Scroll(object sender, EventArgs e)
         {
@@ -63,6 +67,20 @@ namespace SerialKiller3000
             stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[r] + "," + stuff.Gamma.correction[g] + "," + stuff.Gamma.correction[b] + ";");
         }
 
+        private void UpdateUIValues()
+        {
+            redupdown.Value = r;
+            greenupdown.Value = g;
+            blueupdown.Value = b;
+
+            redbar.Value = r;
+            greenbar.Value = g;
+            bluebar.Value = b;
+
+        }
+
+        #endregion  
+
         private void btnOff_Click(object sender, EventArgs e)
         {
             stuff.Serial.RgbledOFF();
@@ -83,6 +101,21 @@ namespace SerialKiller3000
             redupdown.Value = r;
             greenupdown.Value = g;
             blueupdown.Value = b;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.NormalControl_r = r;
+            Properties.Settings.Default.NormalControl_g = g;
+            Properties.Settings.Default.NormalControl_b = b;
+            Properties.Settings.Default.Save();
+        }
+
+        public void LoadSettingsNormalControl()
+        {
+            r = Properties.Settings.Default.NormalControl_r;
+            g = Properties.Settings.Default.NormalControl_g;
+            b = Properties.Settings.Default.NormalControl_b;
         }
 
     }

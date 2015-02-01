@@ -11,9 +11,7 @@ namespace SerialKiller3000
         public static Form1 form1 = new Form1();
         PreferencesWindow preferencesWindow = new PreferencesWindow();
 
-        public static bool connected = false;
         bool preferencesOpen = false;
-        string pong;
 
         //borderless form move stuff
         private bool _dragging = false;
@@ -26,6 +24,7 @@ namespace SerialKiller3000
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            form1 = this;                                   //holy shit, it took me some time to find out why nothing was working properly
 
             tempControl1.TempControl_Load(null, null);
             soundControl1.SoundControl_Load(null, null);  //preload forms for devices and interfaces to become available
@@ -49,51 +48,28 @@ namespace SerialKiller3000
                 this.ShowInTaskbar = false;
             }
 
+            if (Properties.Settings.Default.Preferences_autoconnect) //connect automatically on load to the board or not
+            {
+                stuff.Serial.AutoConnect();
+            }
+
+            if (stuff.Serial.connected && Properties.Settings.Default.Preferences_autostart)  //if already connected we can start the set mode
+            {
+                System.Threading.Thread.Sleep(100);
+                stuff.SettingsMisc.AutoLoad();
+            }
+
+            normalControl1.LoadSettingsNormalControl();
         }
         private void openport_CheckedChanged(object sender, EventArgs e)
         {
-
             if (openport.Checked)
             {
-                portBox.Enabled = false;
-                baudBox.Enabled = false;
-                openport.Text = "Close Port";
-
-                try
-                {
-                    stuff.Serial.uart.PortName = portBox.Text;              //open port and send "ping"
-                    stuff.Serial.uart.BaudRate = int.Parse(baudBox.Text);
-                    stuff.Serial.uart.Open();
-                    stuff.Serial.uart.Write("ping;");
-                    pong = stuff.Serial.uart.ReadTo("!");
-
-                    if (pong == "\n\r>pong")                                //if the SK3k responds, great!
-                    {
-                        MessageBox.Show("Connected to the Serial KILLER 3000!");
-                        EnableForms(true);
-                        stuff.Serial.RgbledOFF();
-                        connected = true;
-                    }
-                    else                                                    //if not, change button text to retry 
-                    {
-                        openport.Checked = false;
-                        openport.Text = "Retry";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + '\n' + "Is the Serial KILLER 3000 connected in port " + stuff.Serial.uart.PortName + "?");
-                    Application.Exit();
-                }
+                stuff.Serial.Disconnect();
             }
             else
             {
-                stuff.Serial.uart.Close();
-                EnableForms(false);
-                portBox.Enabled = true;
-                baudBox.Enabled = true;
-                openport.Text = "Connect";
-                connected = false;
+                stuff.Serial.Connect();
             }
         }
 
@@ -135,6 +111,22 @@ namespace SerialKiller3000
 
         private void btnNormal_CheckedChanged(object sender, EventArgs e)       //normal
         {
+            if (btnNormal.Checked)
+            {
+                stuff.Mode = (int)stuff.ModeStatus.normalModeActive;
+
+                EnableForms(false);
+                btnNormal.Enabled = true;
+                btnNormalPrefs.Enabled = true;
+                stuff.Serial.uart.Write("rgb " + normalControl1.r + "," + normalControl1.g + "," + normalControl1.b + ";");
+            }
+            else
+            {
+                stuff.Serial.RgbledOFF();
+                stuff.Mode = (int)stuff.ModeStatus.off;
+
+                EnableForms(true);
+            }
 
         }
         private void btnNormalPrefs_Click(object sender, EventArgs e)           //normal prefs
@@ -239,7 +231,7 @@ namespace SerialKiller3000
         }
         private void btnDualBreathingPrefs_Click(object sender, EventArgs e)        //dual breathing prefs
         {
-            
+
         }
 
         private void btnSound_CheckedChanged(object sender, EventArgs e)            //sound
@@ -476,7 +468,7 @@ namespace SerialKiller3000
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (connected)
+            if (stuff.Serial.connected)
             {
                 stuff.Serial.RgbledOFF();
                 stuff.Serial.uart.Close();

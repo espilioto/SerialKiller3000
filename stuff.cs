@@ -9,11 +9,12 @@ namespace SerialKiller3000
     public class stuff
     {
 
+        public static string asd;
         public static int Mode = 0;
         public enum ModeStatus
         {
             off = 0,
-            normalMode = 1,
+            normalModeActive = 1,
             breathingModeActive = 2,
             strobeModeActive = 3,
             SoundModeActive = 4,
@@ -81,6 +82,8 @@ namespace SerialKiller3000
         }
         public class Serial
         {
+            public static string port;
+            public static bool connected = false;
             public static SerialPort uart = new SerialPort(); //commands:     ping ;  off ;   rgb r,g,b;  out,bit,0/1;    sta,;   man ;/help ;    
             public static System.Collections.ArrayList portlist = new System.Collections.ArrayList();
 
@@ -92,16 +95,113 @@ namespace SerialKiller3000
                 }
             }
 
+            public static void Connect()
+            {
+                string pong;
+                
+                Form1.form1.portBox.Enabled = false;
+                Form1.form1.baudBox.Enabled = false;
+                Form1.form1.openport.Text = "Close Port";
+                try
+                {
+                    uart.PortName = Form1.form1.portBox.Text;            //open port and send "ping"
+                    uart.BaudRate = int.Parse(Form1.form1.baudBox.Text);
+                    uart.Open();
+                    uart.Write("ping;");
+                    pong = uart.ReadTo("!");
+
+                    if (pong == "\n\r>pong")                                //if the SK3k responds, great!
+                    {
+                        //System.Windows.Forms.MessageBox.Show("Connected to the Serial KILLER 3000!"); //no more messagebox, its annoying
+                        Form1.form1.openport.BackColor = System.Drawing.Color.LightGreen;
+                        Form1.form1.EnableForms(true);
+                        RgbledOFF();
+
+                        connected = true;
+                    }
+                    else                                                    //if not, change button text to retry 
+                    {
+                        Form1.form1.openport.Checked = false;
+                        Form1.form1.openport.Text = "Retry";
+                        Form1.form1.openport.BackColor = System.Drawing.Color.Red;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message + '\n' + "Is the Serial KILLER 3000 connected in port " + stuff.Serial.uart.PortName + "?");
+                    System.Windows.Forms.Application.Exit();
+                }
+            }
+
+            public static void Disconnect()
+            {
+                uart.Close();
+                Form1.form1.openport.BackColor = System.Drawing.Color.Transparent;
+                Form1.form1.EnableForms(false);
+                Form1.form1.portBox.Enabled = true;
+                Form1.form1.baudBox.Enabled = true;
+                Form1.form1.openport.Text = "Connect";
+                connected = false;
+            }
+
+            public static void AutoConnect()
+            {
+
+                uart.Close();
+
+                while (!connected) 
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Connect();
+                    }
+                }
+            }
+
             public static void RgbledOFF()
             {
                 uart.Write("off;");
             }
-
             public static void RgbledRST()
             {
                 uart.Write("rst;");
             }
         }
+        public class SettingsMisc
+        {
+            public static void AutoLoad()
+            {
+                if (Properties.Settings.Default.Preferences_autostart)
+                {
+                    switch (Properties.Settings.Default.Preferences_autostart_mode)
+                    {
+                        case 0:
+                            Form1.form1.btnNormal.Checked = true;
+                            break;
+                        case 1:
+                            Form1.form1.btnRainbow.Checked = true;
+                            break;
+                        case 2:
+                            Form1.form1.btnBreathing.Checked = true;
+                            break;
+                        case 3:
+                            Form1.form1.btnDualBreathing.Checked = true;
+                            break;
+                        case 4:
+                            Form1.form1.btnSound.Checked = true;
+                            break;
+                        case 5:
+                            Form1.form1.btnStrobe.Checked = true;
+                            break;
+                        case 6:
+                            Form1.form1.btnTemp.Checked = true;
+                            break;
+                    }
+                }
+            }
+
+        }
 
     }
 }
+

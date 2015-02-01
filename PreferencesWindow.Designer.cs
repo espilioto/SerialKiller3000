@@ -30,6 +30,9 @@
         {
             this.generalTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.autoconnectCheckBox = new System.Windows.Forms.CheckBox();
+            this.autorunModeComboBox = new System.Windows.Forms.ComboBox();
+            this.autorunModeCheckbox = new System.Windows.Forms.CheckBox();
             this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
             this.checkBoxWithWindoze = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -60,6 +63,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tabPage1.Controls.Add(this.autoconnectCheckBox);
+            this.tabPage1.Controls.Add(this.autorunModeComboBox);
+            this.tabPage1.Controls.Add(this.autorunModeCheckbox);
             this.tabPage1.Controls.Add(this.checkBoxStartMinimized);
             this.tabPage1.Controls.Add(this.checkBoxWithWindoze);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -68,6 +74,46 @@
             this.tabPage1.Size = new System.Drawing.Size(287, 229);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
+            // 
+            // autoconnectCheckBox
+            // 
+            this.autoconnectCheckBox.AutoSize = true;
+            this.autoconnectCheckBox.Location = new System.Drawing.Point(13, 75);
+            this.autoconnectCheckBox.Name = "autoconnectCheckBox";
+            this.autoconnectCheckBox.Size = new System.Drawing.Size(87, 17);
+            this.autoconnectCheckBox.TabIndex = 4;
+            this.autoconnectCheckBox.Text = "Autoconnect";
+            this.autoconnectCheckBox.UseVisualStyleBackColor = true;
+            this.autoconnectCheckBox.CheckedChanged += new System.EventHandler(this.autoconnectCheckBox_CheckedChanged);
+            // 
+            // autorunModeComboBox
+            // 
+            this.autorunModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.autorunModeComboBox.FormattingEnabled = true;
+            this.autorunModeComboBox.Items.AddRange(new object[] {
+            "Normal",
+            "Rainbow",
+            "Breathing ",
+            "Dual Breathing",
+            "Sound",
+            "Strobe",
+            "Temperature"});
+            this.autorunModeComboBox.Location = new System.Drawing.Point(24, 121);
+            this.autorunModeComboBox.Name = "autorunModeComboBox";
+            this.autorunModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.autorunModeComboBox.TabIndex = 3;
+            this.autorunModeComboBox.SelectedIndexChanged += new System.EventHandler(this.autorunModeComboBox_SelectedIndexChanged);
+            // 
+            // autorunModeCheckbox
+            // 
+            this.autorunModeCheckbox.AutoSize = true;
+            this.autorunModeCheckbox.Location = new System.Drawing.Point(24, 98);
+            this.autorunModeCheckbox.Name = "autorunModeCheckbox";
+            this.autorunModeCheckbox.Size = new System.Drawing.Size(130, 17);
+            this.autorunModeCheckbox.TabIndex = 2;
+            this.autorunModeCheckbox.Text = "Autorun mode on start";
+            this.autorunModeCheckbox.UseVisualStyleBackColor = true;
+            this.autorunModeCheckbox.CheckedChanged += new System.EventHandler(this.autorunModeCheckbox_CheckedChanged);
             // 
             // checkBoxStartMinimized
             // 
@@ -198,5 +244,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBoxStartMinimized;
+        private System.Windows.Forms.ComboBox autorunModeComboBox;
+        private System.Windows.Forms.CheckBox autorunModeCheckbox;
+        private System.Windows.Forms.CheckBox autoconnectCheckBox;
     }
 }

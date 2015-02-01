@@ -77,6 +77,7 @@
             // portBox
             // 
             resources.ApplyResources(this.portBox, "portBox");
+            this.portBox.BackColor = System.Drawing.SystemColors.Window;
             this.portBox.FormattingEnabled = true;
             this.portBox.Name = "portBox";
             // 
@@ -379,15 +380,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.CheckBox openport;
-        private System.Windows.Forms.ComboBox portBox;
-        private System.Windows.Forms.NumericUpDown baudBox;
-        private System.Windows.Forms.CheckBox btnNormal;
-        private System.Windows.Forms.CheckBox btnRainbow;
-        private System.Windows.Forms.CheckBox btnBreathing;
-        private System.Windows.Forms.CheckBox btnSound;
-        private System.Windows.Forms.CheckBox btnStrobe;
-        private System.Windows.Forms.CheckBox btnTemp;
         private System.Windows.Forms.Button btnNormalPrefs;
         private System.Windows.Forms.Button btnRainbowPrefs;
         private System.Windows.Forms.Button btnBreathingPrefs;
@@ -399,7 +391,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button btnDualBreathingPrefs;
-        private System.Windows.Forms.CheckBox btnDualBreathing;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Button btnPreferences;
@@ -412,6 +403,16 @@
         private TempControl tempControl1;
         private SoundControl soundControl1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.CheckBox btnNormal;
+        public System.Windows.Forms.CheckBox btnRainbow;
+        public System.Windows.Forms.CheckBox btnBreathing;
+        public System.Windows.Forms.CheckBox btnSound;
+        public System.Windows.Forms.CheckBox btnStrobe;
+        public System.Windows.Forms.CheckBox btnTemp;
+        public System.Windows.Forms.CheckBox btnDualBreathing;
+        public System.Windows.Forms.CheckBox openport;
+        public System.Windows.Forms.ComboBox portBox;
+        public System.Windows.Forms.NumericUpDown baudBox;
 
     }
 }

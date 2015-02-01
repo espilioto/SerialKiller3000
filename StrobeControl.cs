@@ -102,7 +102,7 @@ namespace SerialKiller3000
 
         private void timerStrobe_Tick(object sender, EventArgs e)
         {
-            if (Form1.connected && stuff.Mode == (int)stuff.ModeStatus.strobeModeActive)
+            if (stuff.Serial.connected && stuff.Mode == (int)stuff.ModeStatus.strobeModeActive)
             {
                 if (!on)
                 {
