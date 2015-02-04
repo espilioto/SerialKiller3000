@@ -9,7 +9,6 @@ namespace SerialKiller3000
     public class stuff
     {
 
-        public static string asd;
         public static int Mode = 0;
         public enum ModeStatus
         {
@@ -128,13 +127,25 @@ namespace SerialKiller3000
                 }
                 catch (System.Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show(ex.Message + '\n' + "Is the Serial KILLER 3000 connected in port " + stuff.Serial.uart.PortName + "?");
-                    System.Windows.Forms.Application.Exit();
+                    int retries = 0;
+
+                    retries++;
+                    System.Threading.Thread.Sleep(1000);
+                    Connect();      //just shut up and retry till it connects
+
+                    if (retries > 5)
+                    {
+                        System.Windows.Forms.MessageBox.Show(ex.Message + '\n' + "Is the Serial KILLER 3000 connected in port " + stuff.Serial.uart.PortName + "?");
+                        System.Windows.Forms.Application.Exit();
+                    }
                 }
             }
 
             public static void Disconnect()
             {
+                RgbledOFF();
+                Form1.form1.UncheckButtons();
+
                 uart.Close();
                 Form1.form1.openport.BackColor = System.Drawing.Color.Transparent;
                 Form1.form1.EnableForms(false);
@@ -142,20 +153,6 @@ namespace SerialKiller3000
                 Form1.form1.baudBox.Enabled = true;
                 Form1.form1.openport.Text = "Connect";
                 connected = false;
-            }
-
-            public static void AutoConnect()
-            {
-
-                uart.Close();
-
-                while (!connected) 
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Connect();
-                    }
-                }
             }
 
             public static void RgbledOFF()

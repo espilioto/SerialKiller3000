@@ -44,13 +44,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.soundBar = new System.Windows.Forms.ProgressBar();
-            this.backgroundTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // timerSound
             // 
-            this.timerSound.Enabled = true;
             this.timerSound.Interval = 10;
             this.timerSound.Tick += new System.EventHandler(this.timerSound_Tick);
             // 
@@ -242,7 +240,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar soundBar;
-        public System.Windows.Forms.Timer backgroundTimer;
 
     }
 }

@@ -25,6 +25,7 @@ namespace SerialKiller3000
 
             checkBoxWithWindoze.Checked = Properties.Settings.Default.Preferences_runWithWindows;
             checkBoxStartMinimized.Checked = Properties.Settings.Default.Preferences_startMinimized;
+            autoconnectCheckBox.Checked = Properties.Settings.Default.Preferences_autoconnect;
             autorunModeCheckbox.Checked = Properties.Settings.Default.Preferences_autostart;
             autorunModeComboBox.SelectedIndex = Properties.Settings.Default.Preferences_autostart_mode;
 
@@ -88,7 +89,8 @@ namespace SerialKiller3000
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("\r•08/2014: beta3 - Semi-implemented sound mode (CoreAudio). Some UI changes." +
+            MessageBox.Show("\r•02/2015: v1 - So many changes, so many words. tldr; too bored to update this" + 
+                            "\r•08/2014: beta3 - Semi-implemented sound mode (CoreAudio). Some UI changes." +
                             "\r•05/2014: beta2 - Minor UI and stability improvements." +
                             "\r•04/2014: beta1 - Main functionality achieved." +
                             "\r•03/2014: Rewrote the entire core code for the uC, it now tokenizes and parses strings." +

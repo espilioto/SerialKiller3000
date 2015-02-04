@@ -27,19 +27,17 @@ namespace SerialKiller3000
             form1 = this;                                   //holy shit, it took me some time to find out why nothing was working properly
 
             tempControl1.TempControl_Load(null, null);
-            soundControl1.SoundControl_Load(null, null);  //preload forms for devices and interfaces to become available
+            soundControl1.SoundControl_Load(null, null);  //preload forms for devices to become available
 
             EnableForms(false);
             initMinimizeToTrayStuff();
 
             baudBox.Text = "19200";
-
             stuff.Serial.GetPorts();
             foreach (var port in stuff.Serial.portlist)
             {
                 portBox.Items.Add(port);
             }
-
             portBox.SelectedIndex = 0;
 
             if (Properties.Settings.Default.Preferences_startMinimized) //start minimized or not
@@ -47,29 +45,28 @@ namespace SerialKiller3000
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
             }
-
             if (Properties.Settings.Default.Preferences_autoconnect) //connect automatically on load to the board or not
             {
-                stuff.Serial.AutoConnect();
-            }
-
-            if (stuff.Serial.connected && Properties.Settings.Default.Preferences_autostart)  //if already connected we can start the set mode
-            {
-                System.Threading.Thread.Sleep(100);
-                stuff.SettingsMisc.AutoLoad();
+                openport.Checked = true;
             }
 
             normalControl1.LoadSettingsNormalControl();
+
+            if (stuff.Serial.connected && Properties.Settings.Default.Preferences_autostart)  //if already connected the selected mode will start
+            {
+                //System.Threading.Thread.Sleep(100);
+                //stuff.SettingsMisc.AutoLoad();
+            }
         }
         private void openport_CheckedChanged(object sender, EventArgs e)
         {
             if (openport.Checked)
             {
-                stuff.Serial.Disconnect();
+                stuff.Serial.Connect();
             }
             else
             {
-                stuff.Serial.Connect();
+                stuff.Serial.Disconnect();
             }
         }
 
@@ -105,6 +102,16 @@ namespace SerialKiller3000
             strobeControl1.Visible = b;
             soundControl1.Visible = b;
             tempControl1.Visible = b;
+        }
+        public void UncheckButtons()
+        {
+            foreach (Control c in Controls)
+            {
+                if (c is CheckBox && ((CheckBox)c).Checked == true)
+                {
+                    ((CheckBox)c).Checked = false;
+                }
+            }
         }
 
         #region Mode buttons
@@ -487,8 +494,6 @@ namespace SerialKiller3000
         {
             System.Diagnostics.Process.Start("https://github.com/espilioto/SerialKiller3000");
         }
-
-
 
     }
 }

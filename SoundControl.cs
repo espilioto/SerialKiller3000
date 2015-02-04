@@ -36,9 +36,9 @@ namespace SerialKiller3000
             if (stuff.Mode == (int)stuff.ModeStatus.SoundModeActive)
             {
                 soundLevel = (int)(stuff.CoreAudio.device.AudioMeterInformation.MasterPeakValue * trackBar1.Value);
-                
+
                 Application.DoEvents();
-                
+
                 if (radioRed.Checked)
                     stuff.Serial.uart.Write("rgb " + stuff.Gamma.correction[(soundLevel * 2)] + "," + 0 + "," + 0 + ";");
                 else if (radioGreen.Checked)
@@ -63,14 +63,16 @@ namespace SerialKiller3000
             if (stuff.CoreAudio.devs == null)
                 stuff.CoreAudio.device = stuff.CoreAudio.DevEnum.GetDefaultAudioEndpoint(CoreAudioApi.EDataFlow.eRender, CoreAudioApi.ERole.eMultimedia);
 
+            timerSound.Enabled = true;
             timerSound.Start();
         }
         public void soundModeStop(object sender, EventArgs e)
         {
             timerSound.Stop();
+            timerSound.Enabled = false;
 
             stuff.Serial.RgbledOFF();
-            
+
             soundBar.Value = 0;
         }
 
@@ -84,5 +86,5 @@ namespace SerialKiller3000
         }
     }
 
-    }
+}
 

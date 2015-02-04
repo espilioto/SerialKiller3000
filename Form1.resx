@@ -136,7 +136,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="openport.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="openport.Text" xml:space="preserve">
     <value>Connect</value>
@@ -164,6 +164,9 @@
   </data>
   <data name="portBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>34, 373</value>
+  </data>
+  <data name="portBox.MaxDropDownItems" type="System.Int32, mscorlib">
+    <value>50</value>
   </data>
   <data name="portBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 21</value>
@@ -197,6 +200,9 @@
   </data>
   <data name="baudBox.TabIndex" type="System.Int32, mscorlib">
     <value>62</value>
+  </data>
+  <data name="baudBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="&gt;&gt;baudBox.Name" xml:space="preserve">
     <value>baudBox</value>
