@@ -8,9 +8,9 @@ It's written in C# / VS2013.
 At first this was meant to be a room mood lighting - led strip..thing. Then I dropped that for no reason and decided to install it in my pc case. 
 
 I'll update this and link some gerbers when I finish designing the pcb.
+[PCB \o/]
 
-Here is the C code for the uC (TI CCS5)
- - https://github.com/espilioto/SERIAL-KILLER-MSP430
+[Here is the C code for the uC (TI CCS5)]
 
 Many thanks to the 43oh forum for the help (even though I didn't even start a new thread) :P 
 It's a very nice place even if you're not into this stuff :D
@@ -28,3 +28,6 @@ This project was the one that actually gave me the idea, and made me look into s
 tl;dr: A UART led blinker for the MSP430
 
 ***SouLSLayeR***
+
+[PCB \o/]:https://github.com/espilioto/SerialKiller3000PCB
+[Here is the C code for the uC (TI CCS5)]:https://github.com/espilioto/SERIAL-KILLER-MSP430
