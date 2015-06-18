@@ -12,6 +12,24 @@ I'll update this and link some gerbers when I finish designing the pcb.
 
 [Here is the C code for the uC (TI CCS5)]
 
+###Features
+Led modes:
+- Static color
+- Rainbow
+- Breathing effect songle color)
+- Sound activated 
+- Strobe with adjustable frequency
+- Temperature (2 colors)
+
+TODO list:
+- Breathing effect (2 colors)
+- Properly interpolate colors in a dual color mode
+- Finish user settings saving
+- Remake the GUI in WPF
+
+Maybe:
+- Remake rainbow mode so that its speed can be adjusted
+
 Many thanks to the 43oh forum for the help (even though I didn't even start a new thread) :P 
 It's a very nice place even if you're not into this stuff :D
 
