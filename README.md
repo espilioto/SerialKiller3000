@@ -32,7 +32,7 @@ Maybe:
 - Add more hardware related stuff like fan RPM, CPU/GPU utilization etc
 
 ##Thanks:
-Many thanks to the 43oh forum for the help (even though I didn't even start a new thread) :P 
+Many thanks to the 43oh forum for the help (even though they don't even know it).
 It's a very nice place even if you're not into this stuff :D
 
 Threads that helped me develop this: 
