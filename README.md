@@ -12,14 +12,14 @@ I'll update this and link some gerbers when I finish designing the pcb.
 
 [Here is the C code for the uC (TI CCS5)]
 
-###Features
+##Features
 Led modes:
 - Static color
 - Rainbow
-- Breathing effect songle color)
+- Breathing effect
 - Sound activated 
 - Strobe with adjustable frequency
-- Temperature (2 colors)
+- Temperature controlled (2 colors, only CPU and GPU available for now)
 
 TODO list:
 - Breathing effect (2 colors)
@@ -29,7 +29,9 @@ TODO list:
 
 Maybe:
 - Remake rainbow mode so that its speed can be adjusted
+- Add more hardware related stuff like fan RPM, CPU/GPU utilization etc
 
+##Thanks:
 Many thanks to the 43oh forum for the help (even though I didn't even start a new thread) :P 
 It's a very nice place even if you're not into this stuff :D
 
@@ -49,3 +51,11 @@ tl;dr: A UART led blinker for the MSP430
 
 [PCB \o/]:https://github.com/espilioto/SerialKiller3000PCB
 [Here is the C code for the uC (TI CCS5)]:https://github.com/espilioto/SERIAL-KILLER-MSP430
+
+
+###Uses:
+[OpenHardwareMonitor], [VistaCoreAudioAPI]
+
+[OpenHardwareMonitor]:http://openhardwaremonitor.org/downloads/
+
+[VistaCoreAudioAPI]:http://www.codeproject.com/Articles/18520/Vista-Core-Audio-API-Master-Volume-Control
